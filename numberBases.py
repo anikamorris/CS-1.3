@@ -40,7 +40,7 @@ def decode(digits, base):
             res += int(digit) * int(math.pow(16, power - 1))
             power -= 1
     # Decode digits from any base (2 up to 36)
-    # ...
+    # Set strings to all possible numbers and letters, reverse the order of digits 
     else:
         strings = string.digits + string.ascii_lowercase
         digits = digits[::-1]
