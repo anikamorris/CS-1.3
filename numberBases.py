@@ -19,7 +19,7 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     res = 0
-    # TODO: Decode digits from binary (base 2)
+    # Decode digits from binary (base 2)
     # Loop through each digit, add to a result based on it being multiplied 
     # by 2^len(digits) which should go down by 1 each iteration
     if base == 2:
@@ -27,17 +27,26 @@ def decode(digits, base):
         for i in range(len(digits)):
             res += int(digits[i]) * int(math.pow(2, power - 1))
             power -= 1
-        return res
 
-    # TODO: Decode digits from hexadecimal (base 16)
-    # 
+    # Decode digits from hexadecimal (base 16)
     if base == 16:
+        hex = {"a":10, "b":11, "c":12, "d":13, "e":14, "f":15}
         power = len(digits)
         for i in range(len(digits)):
-            res += 
-    # TODO: Decode digits from any base (2 up to 36)
+            digit = digits[i]
+            if digit in string.ascii_letters:
+                digit = digit.lower()
+                digit = hex[digit]
+            res += int(digit) * int(math.pow(16, power - 1))
+            power -= 1
+    # Decode digits from any base (2 up to 36)
     # ...
-
+    else:
+        strings = string.digits + string.ascii_lowercase
+        digits = digits[::-1]
+        for i, num in enumerate(digits):
+            res += base**i * strings.index(num)
+    return res
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
@@ -85,6 +94,11 @@ def main():
     """Read command-line arguments and convert given digits between bases."""
     import sys
     args = sys.argv[1:]  # Ignore script file name
+    if len(args) == 2:
+        digits = args[0]
+        base = int(args[1])
+        result = decode(digits, base)
+        print('{} in base {} is {} in base 10.'.format(digits, base, result))
     if len(args) == 3:
         digits = args[0]
         base1 = int(args[1])
