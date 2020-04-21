@@ -13,8 +13,11 @@ def find_index(text, pattern):
     # iterate through the text only up to the index that is 1 + the length of
     # the pattern
     for i in range(0, (len(text) - len(pattern) + 1)):
+        # check if the substring starting at i and is the length of pattern
+        # matches the pattern 
         if text[i:(i+len(pattern))] == pattern:
             return i
+    # if we make it to the end without finding the pattern
     return None
 
 
@@ -24,19 +27,24 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     indices = []
+    # iterate through the text only up to the index that is 1 + the length of
+    # the pattern
     for i in range(0, (len(text) - len(pattern) + 1)):
-        if len(indices) <= len(text) - 1: #Used for when pattern is None
+        # in case pattern is an empty string
+        if len(indices) <= len(text) - 1: 
+            # check if the substring starting at i and is the length of pattern
+            # matches the pattern 
             if text[i:(i+len(pattern))] == pattern:
+                # add index to list of starting indices
                 indices.append(i)
+    # if we make it to the end without finding the pattern
     return indices
 
 def test_string_algorithms(text, pattern):
     found = contains(text, pattern)
     print('contains({!r}, {!r}) => {}'.format(text, pattern, found))
-    # TODO: Uncomment these lines after you implement find_index
     index = find_index(text, pattern)
     print('find_index({!r}, {!r}) => {}'.format(text, pattern, index))
-    # TODO: Uncomment these lines after you implement find_all_indexes
     indexes = find_all_indexes(text, pattern)
     print('find_all_indexes({!r}, {!r}) => {}'.format(text, pattern, indexes))
 
